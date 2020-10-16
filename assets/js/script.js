@@ -1,7 +1,7 @@
 // declare global variables
 const mainEl = document.querySelector('main');
 const timeEl = document.getElementById('time');
-let timeRemaining = 60;
+let timeRemaining = NaN;
 let currentQuestion = {};
 let score = 0;
 let highScore = 0;
@@ -32,19 +32,17 @@ const q3 = {
 // get reference to each question object for input as function parameters
 const questionRefs = [q1, q2, q3];
 
-
-
-
-
 // create welcome element
 const displayWelcome = function() {
+    // reset the score
     score = 0;
+    // create welcome elements
     welcomeEl = document.createElement("div");
     welcomeTitle = document.createElement("h1");
     welcomeSubtext = document.createElement("p")
     buttonEl = document.createElement("div")
     startButton = document.createElement("button")
-
+    // give elements attributes and text content
     welcomeEl.setAttribute("id", "welcome");
     welcomeEl.setAttribute("class", "big-div")
     welcomeTitle.setAttribute("class", "element-title");
@@ -53,31 +51,33 @@ const displayWelcome = function() {
     startButton.textContent = "Start Quiz"
     startButton.setAttribute("id", "start-quiz")
     startButton.setAttribute("class", "button")
+    // append the elements to the welcomeEL
     buttonEl.appendChild(startButton);
     welcomeEl.appendChild(welcomeTitle);
     welcomeEl.appendChild(welcomeSubtext);
     welcomeEl.appendChild(buttonEl);
-
+    // append welcomeEl to the screen
     mainEl.appendChild(welcomeEl);
     
 };
 
 // create a new question element
 const displayQuestion = function(obj) {
-    // create question element
+    // create question elements
     questionEl = document.createElement("div");
     questionTextEl = document.createElement("h1");
     answerOlEl = document.createElement("ol");
-
+    // give elements attributes and text content from obj
     questionEl.setAttribute("class", "big-div");
     questionTextEl.setAttribute("class", "question-text");
     answerOlEl.setAttribute("class", "button-list");
     questionEl.setAttribute("data-question-id", obj.number);
-
     questionTextEl.textContent = obj.question;
+    // create answer elements, attributes and text content in a loop of 4
     for (i=0; i<4; i++) {
         answerEl = document.createElement("li");
         answerButton = document.createElement("button");
+
         answerButton.setAttribute("class", "button");
         answerButton.setAttribute("data-answer-id", i);
         answerButton.textContent = obj.answers[i];
@@ -85,25 +85,59 @@ const displayQuestion = function(obj) {
         answerEl.appendChild(answerButton);
         answerOlEl.appendChild(answerEl);
     };
-
+    // append question and answers to question element
     questionEl.appendChild(questionTextEl);
     questionEl.appendChild(answerOlEl);
-
+    // append question element to the screen
     mainEl.appendChild(questionEl);
-    currentQuestion = obj;
 };
 
 // display end screen after last question
 const displayEndScreen = function() {
+    // create elements
     endEl = document.createElement("div");
     h1El = document.createElement("h1");
-
-    h1El.textContent = "Game over, man."
+    formEl = document.createElement("form");
+    nameInput = document.createElement("input");
+    formButton = document.createElement("button");
+    buttonEl = document.createElement("div");
+    startButton = document.createElement("button");
+    // set attributes and content
+    h1El.textContent = "Game over, man.";
     endEl.setAttribute("class", "big-div");
-
+    formEl.setAttribute("id", "score-form");
+    formButton.setAttribute("id", "score-sumbit-button")
+    formButton.textContent = "Submit High Score"
+    nameInput.setAttribute("type", "text");
+    nameInput.setAttribute("placeholder", "enter your initials");
+    startButton.setAttribute("id", "start-quiz");
+    startButton.setAttribute("class", "button");
+    startButton.textContent = "Try Again"
+    // append
+    formEl.appendChild(nameInput);
+    formEl.appendChild(formButton)
+    buttonEl.appendChild(startButton);
     endEl.appendChild(h1El);
+    endEl.appendChild(formEl);
+    endEl.appendChild(buttonEl);
+
     mainEl.appendChild(endEl);
-    localStorage.setItem("high-score", score);
+    // store the high score
+    formRef = document.querySelector('#score-form');
+
+    formRef.addEventListener("submit", function (event) {
+        event.preventDefault();
+        nameInput = event.srcElement[0].value;
+
+        localStorage.setItem("initials", nameInput);
+        localStorage.setItem("high-score", score);
+
+        formEl.reset();
+    })
+    
+    // .addEventListener("sumbit", function (event) {
+    //     event.preventDefault();
+    // });
     timeRemaining = 0;
 }
 
@@ -225,7 +259,7 @@ mainEl.addEventListener("click", function(event) {
     }
     // if the user clicked the high scores button
     else if (mouse.id === "high-score") {
-        if (timeRemaining > 0) {
+        if (timeRemaining > 1) {
             alert("Please finish your quiz!")
         }
         else {
