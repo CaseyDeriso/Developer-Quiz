@@ -108,6 +108,8 @@ const displayEndScreen = function() {
 }
 
 const displayHighScore = function() {
+    timeRemaining = 0;
+
     scoreEl = document.createElement("div");
     h1El = document.createElement("h1");
     scoreDisplayEl = document.createElement("h2");
@@ -190,6 +192,8 @@ mainEl.addEventListener("click", function(event) {
 
         // if that button is the start quiz button
         if (mouse.id === "start-quiz"){
+            // reset timer 
+            timeRemaining = 60;
             // start the timer
             countDown();
             // clear screen and display the questions
@@ -221,8 +225,12 @@ mainEl.addEventListener("click", function(event) {
     }
     // if the user clicked the high scores button
     else if (mouse.id === "high-score") {
-        timeRemaining = 0;
+        if (timeRemaining > 0) {
+            alert("Please finish your quiz!")
+        }
+        else {
         clearAndReplace("highScore");
+        }
     }
     // if the user didn't click a button or the high scores
     else {
