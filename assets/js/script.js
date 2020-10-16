@@ -29,7 +29,7 @@ const q3 = {
     // index number of correct answer
     correct: 1
 };
-
+// get reference to each question object for input as function parameters
 const questionRefs = [q1, q2, q3];
 
 
@@ -38,6 +38,7 @@ const questionRefs = [q1, q2, q3];
 
 // create welcome element
 const displayWelcome = function() {
+    score = 0;
     welcomeEl = document.createElement("div");
     welcomeTitle = document.createElement("h1");
     welcomeSubtext = document.createElement("p")
@@ -58,6 +59,7 @@ const displayWelcome = function() {
     welcomeEl.appendChild(buttonEl);
 
     mainEl.appendChild(welcomeEl);
+    
 };
 
 // create a new question element
@@ -71,7 +73,6 @@ const displayQuestion = function(obj) {
     questionTextEl.setAttribute("class", "question-text");
     answerOlEl.setAttribute("class", "button-list");
     questionEl.setAttribute("data-question-id", obj.number);
-    console.log(obj.number)
 
     questionTextEl.textContent = obj.question;
     for (i=0; i<4; i++) {
@@ -92,14 +93,67 @@ const displayQuestion = function(obj) {
     currentQuestion = obj;
 };
 
-// clear screen and replace with next div
+// display end screen after last question
+const displayEndScreen = function() {
+    endEl = document.createElement("div");
+    h1El = document.createElement("h1");
 
-const clearAndReplace = function(currentEl, questionNumber) {
-    mainEl.removeChild(currentEl);
-    input = questionRefs[questionNumber]
-    console.log(input);
+    h1El.textContent = "Game over, man."
+    endEl.setAttribute("class", "big-div");
+
+    endEl.appendChild(h1El);
+    mainEl.appendChild(endEl);
+    localStorage.setItem("high-score", score);
+    timeRemaining = 0;
+}
+
+const displayHighScore = function() {
+    scoreEl = document.createElement("div");
+    h1El = document.createElement("h1");
+    scoreDisplayEl = document.createElement("h2");
+    buttonEl = document.createElement("div")
+    startButton = document.createElement("button")
+
+
+    scoreEl.setAttribute("class", "big-div");
+    h1El.textContent = "High Score: "
+    startButton.textContent = "Start Quiz"
+    startButton.setAttribute("id", "start-quiz")
+    startButton.setAttribute("class", "button")
+
+    if (localStorage.getItem("high-score") == null) {
+        scoreDisplayEl.textContent = "There is no High Score set!"
+    } 
+    else {
+    scoreDisplayEl.textContent = localStorage.getItem("high-score") + " " + localStorage.getItem("initials");
+    }
+    buttonEl.appendChild(startButton);
+    scoreEl.appendChild(h1El);
+    scoreEl.appendChild(scoreDisplayEl);
+    scoreEl.appendChild(buttonEl);
+
+    mainEl.appendChild(scoreEl);
+}
+
+
+
+// clear screen and replace with next div
+const clearAndReplace = function(nextEl) {
+    const displayEl = document.querySelector(".big-div")
+    mainEl.removeChild(displayEl);
+    // see if we are replacing current element with high score screen
+    if (nextEl === "highScore") {
+        displayHighScore()
+    } 
+    // check if question number for next El is greater than the list of questions
+    else if (nextEl > questionRefs.length - 1) {
+        displayEndScreen()
+    } 
+    // display next question
+    else {
+    input = questionRefs[nextEl]
     displayQuestion(input);
-    // displayQuestion(question1);
+    };
 };
 
 // start count down
@@ -107,14 +161,15 @@ const countDown = function() {
     let timeInterval = setInterval(function() {
         if (timeRemaining < 1) {
             timeRemaining = 0;
-            console.log("time is up")
             clearInterval(timeInterval);
+            clearAndReplace(questionRefs.length)
         };
     timeEl.textContent = timeRemaining;
     timeRemaining--;
     }, 1000);
 };
 
+// subtract 10 seconds from clock
 const timePenalty = function() {
     if (timeRemaining > 0) {
         timeRemaining = timeRemaining - 10;
@@ -130,32 +185,47 @@ mainEl.addEventListener("click", function(event) {
     const mouse = event.target;
     // get reference to the main element to clear it. 
     let parent = event.path.length - 6;
-
     // see if the user clicked a button
     if (mouse.className === "button") {
+
         // if that button is the start quiz button
         if (mouse.id === "start-quiz"){
             // start the timer
             countDown();
             // clear screen and display the questions
-            clearAndReplace(event.path[parent], 0);
+            clearAndReplace(0);
         } 
         // if that button is an answer button
         else if (mouse.hasAttribute("data-answer-id")) {
+            // get reference to which answer was clicked
             selectedAnswer = mouse.getAttribute("data-answer-id");
-            correctAnswer = question1.correct;
+            // get reference to the current question ID (1 index)
+            let currentQuestionId = event.path[parent].getAttribute("data-question-id");
+            // use question ID to get reference to question object
+            let currentQuestionObj = questionRefs[currentQuestionId - 1]
+            // get reference to the correct answer
+            correctAnswer = currentQuestionObj.correct;
+            // if answer is correct
             if (selectedAnswer == correctAnswer) {
                 console.log("that's it")
+                // increment the score
                 score++;
-                let currentQuestion = event.path[parent].getAttribute("data-question-id");
-                clearAndReplace(event.path[parent], currentQuestion);
-            } else {
+                clearAndReplace(currentQuestionId);
+            } 
+            // if answer is incorrect, remove time
+            else {
                 console.log("nope");
                 timePenalty();
             };
-
-        }
-    } else {
+        };
+    }
+    // if the user clicked the high scores button
+    else if (mouse.id === "high-score") {
+        timeRemaining = 0;
+        clearAndReplace("highScore");
+    }
+    // if the user didn't click a button or the high scores
+    else {
         return;
     };
 });
