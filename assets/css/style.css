@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+header h2 {
+    padding: 10px 20px;
+}
+
+main {
+    margin-top: 40px;
+}
+
+.big-div {
+    background-color: aqua;
+    border-radius: 20px;
+    display:flex;
+    flex-direction: column;
+    min-width: 380px;
+    width: 30%;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+#welcome p {
+    line-height: 1.5;
+    font-size: 18px;
+}
+
+
+.element-title {
+    margin-bottom: 20px;
+}
+
+.button {
+    margin: 10px 0;
+    padding: 8px 12px;
+    background-color: rgba(128, 0, 128, 0.8);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 20px;
+}
