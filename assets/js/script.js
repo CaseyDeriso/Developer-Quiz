@@ -106,8 +106,9 @@ const displayEndScreen = function() {
     h1El.textContent = "Game over, man.";
     endEl.setAttribute("class", "big-div");
     formEl.setAttribute("id", "score-form");
-    formButton.setAttribute("id", "score-sumbit-button")
+    formButton.setAttribute("id", "score-submit-button")
     formButton.textContent = "Submit High Score"
+    nameInput.setAttribute("id", "name-input")
     nameInput.setAttribute("type", "text");
     nameInput.setAttribute("placeholder", "enter your initials");
     startButton.setAttribute("id", "start-quiz");
@@ -143,6 +144,7 @@ const displayEndScreen = function() {
 
 const displayHighScore = function() {
     timeRemaining = 0;
+    score = 0;
 
     scoreEl = document.createElement("div");
     h1El = document.createElement("h1");
