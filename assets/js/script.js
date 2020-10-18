@@ -55,7 +55,7 @@ const q5 = {
   question: "What does CSS stand for?",
   answers: ["Cascading Style Sheet", "Complex Style Syntax", "Complete Sound Sheet", "Equal rights and Civil liberties"],
   // index number of correct answer
-  correct: 3,
+  correct: 0,
 };
 
 const q6 = {
