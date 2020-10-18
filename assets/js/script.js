@@ -42,9 +42,64 @@ const q3 = {
   correct: 3,
 };
 
-const q4 = {};
+const q4 = {
+  number: 4,
+  question: "What is an example of a pseudo-element?",
+  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  // index number of correct answer
+  correct: 3,
+};
+
+const q5 = {
+  number: 5,
+  question: "What is an example of a pseudo-element?",
+  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  // index number of correct answer
+  correct: 3,
+};
+
+const q6 = {
+  number: 6,
+  question: "What is an example of a pseudo-element?",
+  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  // index number of correct answer
+  correct: 3,
+};
+
+const q7 = {
+  number: 7,
+  question: "What is an example of a pseudo-element?",
+  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  // index number of correct answer
+  correct: 3,
+};
+
+const q8 = {
+  number: 8,
+  question: "What is an example of a pseudo-element?",
+  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  // index number of correct answer
+  correct: 3,
+};
+
+const q9 = {
+  number: 9,
+  question: "What is an example of a pseudo-element?",
+  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  // index number of correct answer
+  correct: 3,
+};
+
+const q10 = {
+  number: 10,
+  question: "What is an example of a pseudo-element?",
+  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  // index number of correct answer
+  correct: 3,
+};
+
 // get reference to each question object for input as function parameters
-const questionRefs = [q1, q2, q3];
+const questionRefs = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10];
 
 // create welcome element
 const displayWelcome = function () {
@@ -117,7 +172,7 @@ const displayEndScreen = function () {
   buttonEl = document.createElement("div");
   startButton = document.createElement("button");
   // set attributes and content
-  h1El.textContent = "Game over, man.";
+  h1El.textContent = "Game Over. Please submit your score";
   endEl.setAttribute("class", "big-div");
   formEl.setAttribute("id", "score-form");
   formButton.setAttribute("id", "score-submit-button");
@@ -142,12 +197,17 @@ const displayEndScreen = function () {
   // add event listener to form
   formRef.addEventListener("submit", function (event) {
     event.preventDefault();
+    if (score < localStorage.getItem("high-score")){
+      alert("Your score is lower than the highest score, Try again!")
+      formEl.reset();
+    } else {
     nameInput = event.srcElement[0].value;
     localStorage.setItem("initials", nameInput);
     localStorage.setItem("high-score", score);
 
     formEl.reset();
-    alert("Your score has been saved!")
+    alert("Your score has been saved!");
+    }
   });
   timeRemaining = 0;
 };
@@ -159,7 +219,7 @@ const displayHighScore = function () {
   scoreEl = document.createElement("div");
   h1El = document.createElement("h1");
   scoreDisplayEl = document.createElement("h2");
-  initialsDisplayEl = document.createElement("h2")
+  initialsDisplayEl = document.createElement("h2");
   buttonEl = document.createElement("div");
   startButton = document.createElement("button");
 
@@ -172,9 +232,10 @@ const displayHighScore = function () {
   if (localStorage.getItem("high-score") == null) {
     scoreDisplayEl.textContent = "There is no High Score set!";
   } else {
-    scoreDisplayEl.textContent = 
+    scoreDisplayEl.textContent =
       "The most questions answered is: " + localStorage.getItem("high-score");
-      initialsDisplayEl.textContent = "Set by: " + localStorage.getItem("initials");
+    initialsDisplayEl.textContent =
+      "Set by: " + localStorage.getItem("initials");
   }
   buttonEl.appendChild(startButton);
   scoreEl.appendChild(h1El);
@@ -217,7 +278,6 @@ const countDown = function () {
     }
     timeEl.textContent = timeRemaining;
     timeRemaining--;
-
   }, 1000);
 };
 
@@ -239,7 +299,6 @@ displayWelcome();
 mainEl.addEventListener("click", function (event) {
   // get reference to what element was clicked
   const mouse = event.target;
-  console.log(mouse.id)
   // get reference to the main element to clear it.
   let parent = event.path.length - 6;
   // see if the user clicked a button
@@ -255,7 +314,6 @@ mainEl.addEventListener("click", function (event) {
     }
     // if that button is an answer button
     else if (mouse.hasAttribute("data-answer-id")) {
-      console.dir(mouse)
       // get reference to which answer was clicked
       selectedAnswer = mouse.getAttribute("data-answer-id");
       // get reference to the current question ID (1 index)
@@ -280,7 +338,6 @@ mainEl.addEventListener("click", function (event) {
   }
   // if the user clicked the high scores button
   else if (mouse.id === "high-score") {
-    console.log("this is working")
     if (timeRemaining > 1) {
       alert("Please finish your quiz!");
     } else {
