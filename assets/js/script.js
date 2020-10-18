@@ -79,28 +79,28 @@ const displayQuestion = function (obj) {
   // create question elements
   questionEl = document.createElement("div");
   questionTextEl = document.createElement("h1");
-  answerOlEl = document.createElement("ol");
+  answerulEl = document.createElement("ul");
   // give elements attributes and text content from obj
   questionEl.setAttribute("class", "big-div");
   questionTextEl.setAttribute("class", "question-text");
-  answerOlEl.setAttribute("class", "button-list");
+  answerulEl.setAttribute("class", "button-list");
   questionEl.setAttribute("data-question-id", obj.number);
   questionTextEl.textContent = obj.question;
   // create answer elements, attributes and text content in a loop of 4
   for (i = 0; i < 4; i++) {
     answerEl = document.createElement("li");
     answerButton = document.createElement("button");
-
-    answerButton.setAttribute("class", "button");
+    // call these buttons "answer" instead of button
+    answerButton.setAttribute("class", "answer");
     answerButton.setAttribute("data-answer-id", i);
     answerButton.textContent = obj.answers[i];
-
+    // append button into answer element, then onto list
     answerEl.appendChild(answerButton);
-    answerOlEl.appendChild(answerEl);
+    answerulEl.appendChild(answerEl);
   }
   // append question and answers to question element
   questionEl.appendChild(questionTextEl);
-  questionEl.appendChild(answerOlEl);
+  questionEl.appendChild(answerulEl);
   // append question element to the screen
   mainEl.appendChild(questionEl);
 };
@@ -232,10 +232,11 @@ displayWelcome();
 mainEl.addEventListener("click", function (event) {
   // get reference to what element was clicked
   const mouse = event.target;
+  console.log(mouse);
   // get reference to the main element to clear it.
   let parent = event.path.length - 6;
   // see if the user clicked a button
-  if (mouse.className === "button") {
+  if (mouse.className === "button" || "answer") {
     // if that button is the start quiz button
     if (mouse.id === "start-quiz") {
       // reset timer
@@ -259,14 +260,12 @@ mainEl.addEventListener("click", function (event) {
       correctAnswer = currentQuestionObj.correct;
       // if answer is correct
       if (selectedAnswer == correctAnswer) {
-        console.log("that's it");
         // increment the score
         score++;
         clearAndReplace(currentQuestionId);
       }
       // if answer is incorrect, remove time
       else {
-        console.log("nope");
         timePenalty();
       }
     }
