@@ -44,58 +44,58 @@ const q3 = {
 
 const q4 = {
   number: 4,
-  question: "What is an example of a pseudo-element?",
-  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  question: "What is the newest version of HTML being developed?",
+  answers: ["HTML4", "HTML 3", "HTML5", "There is only one type of HTML"],
   // index number of correct answer
-  correct: 3,
+  correct: 2,
 };
 
 const q5 = {
   number: 5,
-  question: "What is an example of a pseudo-element?",
-  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  question: "What does CSS stand for?",
+  answers: ["Cascading Style Sheet", "Complex Style Syntax", "Complete Sound Sheet", "Equal rights and Civil liberties"],
   // index number of correct answer
   correct: 3,
 };
 
 const q6 = {
   number: 6,
-  question: "What is an example of a pseudo-element?",
-  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  question: "How do you find the number with the highest value of x and y?",
+  answers: ["top(x, y)", "Math.ceil(x, y)", "Math.max(x, y)", "ceil(x, y)"],
   // index number of correct answer
-  correct: 3,
+  correct: 2,
 };
 
 const q7 = {
   number: 7,
-  question: "What is an example of a pseudo-element?",
-  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  question: "which command should you use to initialize a new Git repository?",
+  answers: ["git bash", "git install", "git init", "git start"],
   // index number of correct answer
-  correct: 3,
+  correct: 2,
 };
 
 const q8 = {
   number: 8,
-  question: "What is an example of a pseudo-element?",
-  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  question: "What is the correct synax for referring to an external script called \"xxx.js\"?",
+  answers: ["<script src=\"xxx.js\">", "<script href=\"xxx.js\'>", "<script name=\"xxx.js\">", "<script></script href=\"xxx.js\">"],
   // index number of correct answer
-  correct: 3,
+  correct: 0,
 };
 
 const q9 = {
   number: 9,
-  question: "What is an example of a pseudo-element?",
-  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  question: "Which file can you configure to engure that certain file types are never committed to the local Git repository?",
+  answers: ["ignore.git", ".gitignore", ".gitignore.txt", "git.ignore"],
   // index number of correct answer
-  correct: 3,
+  correct: 1,
 };
 
 const q10 = {
   number: 10,
-  question: "What is an example of a pseudo-element?",
-  answers: ["::before", "::after", "::first-letter", "All of the above"],
+  question: "What does HTML stand for?",
+  answers: ["Hyper type marked language", "Hyper text markup language", "Hyped terrain mock language", "Hyper typeface main loop"],
   // index number of correct answer
-  correct: 3,
+  correct: 1,
 };
 
 // get reference to each question object for input as function parameters
