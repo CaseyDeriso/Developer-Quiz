@@ -176,7 +176,7 @@ const displayEndScreen = function () {
   endEl.setAttribute("class", "big-div");
   formEl.setAttribute("id", "score-form");
   formButton.setAttribute("id", "score-submit-button");
-  formButton.textContent = "Submit High Score";
+  formButton.textContent = "Submit Score";
   nameInput.setAttribute("id", "name-input");
   nameInput.setAttribute("type", "text");
   nameInput.setAttribute("placeholder", "enter your initials");

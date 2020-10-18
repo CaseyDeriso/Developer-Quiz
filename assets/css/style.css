@@ -83,6 +83,7 @@ header h2 {
   display: flex;
   margin: 10px 0;
   width: 100%;
+  max-width: 500px;
   height: 5vh;
   gap: 5px;
 }
