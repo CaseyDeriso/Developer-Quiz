@@ -1,6 +1,7 @@
 // declare global variables
 const mainEl = document.querySelector("main");
 const timeEl = document.getElementById("time");
+const timerEl = document.querySelector(".timer");
 let timeRemaining = NaN;
 let currentQuestion = {};
 let score = 0;
@@ -158,6 +159,7 @@ const displayHighScore = function () {
   scoreEl = document.createElement("div");
   h1El = document.createElement("h1");
   scoreDisplayEl = document.createElement("h2");
+  initialsDisplayEl = document.createElement("h2")
   buttonEl = document.createElement("div");
   startButton = document.createElement("button");
 
@@ -170,14 +172,14 @@ const displayHighScore = function () {
   if (localStorage.getItem("high-score") == null) {
     scoreDisplayEl.textContent = "There is no High Score set!";
   } else {
-    scoreDisplayEl.textContent =
-      localStorage.getItem("high-score") +
-      " " +
-      localStorage.getItem("initials");
+    scoreDisplayEl.textContent = 
+      "The most correctly answered questions is: " + localStorage.getItem("high-score");
+      initialsDisplayEl.textContent = "Set by: " + localStorage.getItem("initials");
   }
   buttonEl.appendChild(startButton);
   scoreEl.appendChild(h1El);
   scoreEl.appendChild(scoreDisplayEl);
+  scoreEl.appendChild(initialsDisplayEl);
   scoreEl.appendChild(buttonEl);
 
   mainEl.appendChild(scoreEl);
@@ -215,6 +217,7 @@ const countDown = function () {
     }
     timeEl.textContent = timeRemaining;
     timeRemaining--;
+
   }, 1000);
 };
 
@@ -222,6 +225,10 @@ const countDown = function () {
 const timePenalty = function () {
   if (timeRemaining > 0) {
     timeRemaining = timeRemaining - 10;
+    timerEl.style.color = "red";
+    setTimeout(function () {
+      timerEl.style.color = "black";
+    }, 1500);
   }
 };
 
@@ -232,11 +239,11 @@ displayWelcome();
 mainEl.addEventListener("click", function (event) {
   // get reference to what element was clicked
   const mouse = event.target;
-  console.log(mouse);
+  console.log(mouse.id)
   // get reference to the main element to clear it.
   let parent = event.path.length - 6;
   // see if the user clicked a button
-  if (mouse.className === "button" || "answer") {
+  if (mouse.className === "button" || mouse.className === "answer") {
     // if that button is the start quiz button
     if (mouse.id === "start-quiz") {
       // reset timer
@@ -248,6 +255,7 @@ mainEl.addEventListener("click", function (event) {
     }
     // if that button is an answer button
     else if (mouse.hasAttribute("data-answer-id")) {
+      console.dir(mouse)
       // get reference to which answer was clicked
       selectedAnswer = mouse.getAttribute("data-answer-id");
       // get reference to the current question ID (1 index)
@@ -272,6 +280,7 @@ mainEl.addEventListener("click", function (event) {
   }
   // if the user clicked the high scores button
   else if (mouse.id === "high-score") {
+    console.log("this is working")
     if (timeRemaining > 1) {
       alert("Please finish your quiz!");
     } else {
