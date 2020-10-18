@@ -139,15 +139,15 @@ const displayEndScreen = function () {
   mainEl.appendChild(endEl);
   // store the high score
   formRef = document.querySelector("#score-form");
-
+  // add event listener to form
   formRef.addEventListener("submit", function (event) {
     event.preventDefault();
     nameInput = event.srcElement[0].value;
-
     localStorage.setItem("initials", nameInput);
     localStorage.setItem("high-score", score);
 
     formEl.reset();
+    alert("Your score has been saved!")
   });
   timeRemaining = 0;
 };
@@ -173,7 +173,7 @@ const displayHighScore = function () {
     scoreDisplayEl.textContent = "There is no High Score set!";
   } else {
     scoreDisplayEl.textContent = 
-      "The most correctly answered questions is: " + localStorage.getItem("high-score");
+      "The most questions answered is: " + localStorage.getItem("high-score");
       initialsDisplayEl.textContent = "Set by: " + localStorage.getItem("initials");
   }
   buttonEl.appendChild(startButton);
