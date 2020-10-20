@@ -117,7 +117,7 @@ const displayWelcome = function () {
   welcomeTitle.setAttribute("class", "element-title");
   welcomeTitle.textContent = "Welcome to the Web Developer Quiz!";
   welcomeSubtext.textContent =
-    "Try and and answer the following developer-related question within the time limit. keep in mind that incorrect answers will penalize your score/time by ten seconds!";
+    "Try and and answer the following developer-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
   startButton.textContent = "Start Quiz";
   startButton.setAttribute("id", "start-quiz");
   startButton.setAttribute("class", "button");
