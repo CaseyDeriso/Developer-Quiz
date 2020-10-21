@@ -19,3 +19,6 @@
 
 ### [Click here to see the deployed quiz!](http://caseyderiso.github.io/Developer-Quiz)
 
+
+### Screenshot of deployed application 
+![screenshot of deployed application](assets/images/screenshot.jpg)
